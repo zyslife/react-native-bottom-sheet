@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import {
+  Dimensions,
   Keyboard,
   KeyboardEvent,
   KeyboardEventEasing,
@@ -13,6 +14,7 @@ import {
   useWorkletCallback,
 } from 'react-native-reanimated';
 import { KEYBOARD_STATE } from '../constants';
+const SH = Dimensions.get("screen").height;
 
 const KEYBOARD_EVENT_MAPPER = {
   KEYBOARD_SHOW: Platform.select({
@@ -72,7 +74,7 @@ export const useKeyboard = () => {
     const handleOnKeyboardShow = (event: KeyboardEvent) => {
       runOnUI(handleKeyboardEvent)(
         KEYBOARD_STATE.SHOWN,
-        event.endCoordinates.height,
+        SH - event.endCoordinates.screenY,
         event.duration,
         event.easing
       );
@@ -80,7 +82,7 @@ export const useKeyboard = () => {
     const handleOnKeyboardHide = (event: KeyboardEvent) => {
       runOnUI(handleKeyboardEvent)(
         KEYBOARD_STATE.HIDDEN,
-        event.endCoordinates.height,
+        SH - event.endCoordinates.screenY,
         event.duration,
         event.easing
       );
